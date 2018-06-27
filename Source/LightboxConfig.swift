@@ -40,9 +40,9 @@ import Imaginary
   /// Number of images to preload.
   ///
   /// 0 - Preload all images (default).
-  @objc public static var preload = 0
+  public static var preload = 0
 
-  @objc public struct PageIndicator {
+  public struct PageIndicator {
     public static var enabled = true
     public static var separatorColor = UIColor(hex: "3D4757")
 
@@ -57,7 +57,7 @@ import Imaginary
     ]
   }
 
-  @objc public struct CloseButton {
+  public struct CloseButton {
     public static var enabled = true
     public static var size: CGSize?
     public static var text = NSLocalizedString("Close", comment: "")
@@ -74,7 +74,7 @@ import Imaginary
     ]
   }
 
-  @objc public struct DeleteButton {
+  public struct DeleteButton {
     public static var enabled = false
     public static var size: CGSize?
     public static var text = NSLocalizedString("Delete", comment: "")
@@ -91,7 +91,7 @@ import Imaginary
     ]
   }
 
-  @objc public struct InfoLabel {
+  public struct InfoLabel {
     public static var enabled = true
     public static var textColor = UIColor.white
     public static var ellipsisText = NSLocalizedString("Show more", comment: "")
@@ -103,7 +103,7 @@ import Imaginary
     ]
   }
 
-  @objc public struct Zoom {
+  public struct Zoom {
     public static var minimumScale: CGFloat = 1.0
     public static var maximumScale: CGFloat = 3.0
   }
