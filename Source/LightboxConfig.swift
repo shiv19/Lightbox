@@ -4,12 +4,12 @@ import AVKit
 import AVFoundation
 import Imaginary
 
-public class LightboxConfig {
+@objc public class LightboxConfig: NSObject {
   /// Whether to show status bar while Lightbox is presented
-  public static var hideStatusBar = true
+  @objc public static var hideStatusBar = true
 
   /// Provide a closure to handle selected video
-  public static var handleVideo: (_ from: UIViewController, _ videoURL: URL) -> Void = { from, videoURL in
+  @objc public static var handleVideo: (_ from: UIViewController, _ videoURL: URL) -> Void = { from, videoURL in
     let videoController = AVPlayerViewController()
     videoController.player = AVPlayer(url: videoURL)
 
@@ -19,7 +19,7 @@ public class LightboxConfig {
   }
 
   /// How to load image onto UIImageView
-  public static var loadImage: (UIImageView, URL, ((UIImage?) -> Void)?) -> Void = { (imageView, imageURL, completion) in
+  @objc public static var loadImage: (UIImageView, URL, ((UIImage?) -> Void)?) -> Void = { (imageView, imageURL, completion) in
 
     // Use Imaginary by default
     imageView.setImage(url: imageURL, placeholder: nil, completion: { result in
@@ -33,16 +33,16 @@ public class LightboxConfig {
   }
 
   /// Indicator is used to show while image is being fetched
-  public static var makeLoadingIndicator: () -> UIView = {
+  @objc public static var makeLoadingIndicator: () -> UIView = {
     return LoadingIndicator()
   }
   
   /// Number of images to preload.
   ///
   /// 0 - Preload all images (default).
-  public static var preload = 0
+  @objc public static var preload = 0
 
-  public struct PageIndicator {
+  @objc public struct PageIndicator {
     public static var enabled = true
     public static var separatorColor = UIColor(hex: "3D4757")
 
@@ -57,7 +57,7 @@ public class LightboxConfig {
     ]
   }
 
-  public struct CloseButton {
+  @objc public struct CloseButton {
     public static var enabled = true
     public static var size: CGSize?
     public static var text = NSLocalizedString("Close", comment: "")
@@ -74,7 +74,7 @@ public class LightboxConfig {
     ]
   }
 
-  public struct DeleteButton {
+  @objc public struct DeleteButton {
     public static var enabled = false
     public static var size: CGSize?
     public static var text = NSLocalizedString("Delete", comment: "")
@@ -91,7 +91,7 @@ public class LightboxConfig {
     ]
   }
 
-  public struct InfoLabel {
+  @objc public struct InfoLabel {
     public static var enabled = true
     public static var textColor = UIColor.white
     public static var ellipsisText = NSLocalizedString("Show more", comment: "")
@@ -103,7 +103,7 @@ public class LightboxConfig {
     ]
   }
 
-  public struct Zoom {
+  @objc public struct Zoom {
     public static var minimumScale: CGFloat = 1.0
     public static var maximumScale: CGFloat = 3.0
   }
