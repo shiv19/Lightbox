@@ -43,10 +43,10 @@ import Imaginary
   @objc public static var preload = 0
 
   @objc public struct PageIndicator {
-    @objc public static var enabled = true
-    @objc public static var separatorColor = UIColor(hex: "3D4757")
+    public static var enabled = true
+    public static var separatorColor = UIColor(hex: "3D4757")
 
-    @objc public static var textAttributes: [NSAttributedStringKey: Any] = [
+    public static var textAttributes: [NSAttributedStringKey: Any] = [
       .font: UIFont.systemFont(ofSize: 12),
       .foregroundColor: UIColor(hex: "899AB8"),
       .paragraphStyle: {
@@ -58,12 +58,12 @@ import Imaginary
   }
 
   @objc public struct CloseButton {
-    @objc public static var enabled = true
-    @objc public static var size: CGSize?
-    @objc public static var text = NSLocalizedString("Close", comment: "")
-    @objc public static var image: UIImage?
+    public static var enabled = true
+    public static var size: CGSize?
+    public static var text = NSLocalizedString("Close", comment: "")
+    public static var image: UIImage?
 
-    @objc public static var textAttributes: [NSAttributedStringKey: Any] = [
+    public static var textAttributes: [NSAttributedStringKey: Any] = [
       .font: UIFont.boldSystemFont(ofSize: 16),
       .foregroundColor: UIColor.white,
       .paragraphStyle: {
@@ -75,12 +75,12 @@ import Imaginary
   }
 
   @objc public struct DeleteButton {
-    @objc public static var enabled = false
-    @objc public static var size: CGSize?
-    @objc public static var text = NSLocalizedString("Delete", comment: "")
-    @objc public static var image: UIImage?
+    public static var enabled = false
+    public static var size: CGSize?
+    public static var text = NSLocalizedString("Delete", comment: "")
+    public static var image: UIImage?
 
-    @objc public static var textAttributes: [NSAttributedStringKey: Any] = [
+    public static var textAttributes: [NSAttributedStringKey: Any] = [
       .font: UIFont.boldSystemFont(ofSize: 16),
       .foregroundColor: UIColor(hex: "FA2F5B"),
       .paragraphStyle: {
@@ -92,19 +92,19 @@ import Imaginary
   }
 
   @objc public struct InfoLabel {
-    @objc public static var enabled = true
-    @objc public static var textColor = UIColor.white
-    @objc public static var ellipsisText = NSLocalizedString("Show more", comment: "")
-    @objc public static var ellipsisColor = UIColor(hex: "899AB9")
+    public static var enabled = true
+    public static var textColor = UIColor.white
+    public static var ellipsisText = NSLocalizedString("Show more", comment: "")
+    public static var ellipsisColor = UIColor(hex: "899AB9")
 
-    @objc public static var textAttributes: [NSAttributedStringKey: Any] = [
+    public static var textAttributes: [NSAttributedStringKey: Any] = [
       .font: UIFont.systemFont(ofSize: 12),
       .foregroundColor: UIColor(hex: "DBDBDB")
     ]
   }
 
   @objc public struct Zoom {
-    @objc public static var minimumScale: CGFloat = 1.0
-    @objc public static var maximumScale: CGFloat = 3.0
+    public static var minimumScale: CGFloat = 1.0
+    public static var maximumScale: CGFloat = 3.0
   }
 }
