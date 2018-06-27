@@ -1,13 +1,13 @@
 import UIKit
 import Imaginary
 
-open class LightboxImage {
+@objc open class LightboxImage {
 
-  open fileprivate(set) var image: UIImage?
-  open fileprivate(set) var imageURL: URL?
-  open fileprivate(set) var videoURL: URL?
-  open fileprivate(set) var imageClosure: (() -> UIImage)?
-  open var text: String
+  @objc open fileprivate(set) var image: UIImage?
+  @objc open fileprivate(set) var imageURL: URL?
+  @objc open fileprivate(set) var videoURL: URL?
+  @objc open fileprivate(set) var imageClosure: (() -> UIImage)?
+  @objc open var text: String
 
   // MARK: - Initialization
   
@@ -15,25 +15,25 @@ open class LightboxImage {
     self.text = text
   }
 
-  public init(image: UIImage, text: String = "", videoURL: URL? = nil) {
+  @objc public init(image: UIImage, text: String = "", videoURL: URL? = nil) {
     self.image = image
     self.text = text
     self.videoURL = videoURL
   }
 
-  public init(imageURL: URL, text: String = "", videoURL: URL? = nil) {
+  @objc public init(imageURL: URL, text: String = "", videoURL: URL? = nil) {
     self.imageURL = imageURL
     self.text = text
     self.videoURL = videoURL
   }
   
-  public init(imageClosure: @escaping () -> UIImage, text: String = "", videoURL: URL? = nil) {
+  @objc public init(imageClosure: @escaping () -> UIImage, text: String = "", videoURL: URL? = nil) {
     self.imageClosure = imageClosure
     self.text = text
     self.videoURL = videoURL
   }
 
-  open func addImageTo(_ imageView: UIImageView, completion: ((UIImage?) -> Void)? = nil) {
+  @objc open func addImageTo(_ imageView: UIImageView, completion: ((UIImage?) -> Void)? = nil) {
     if let image = image {
       imageView.image = image
       completion?(image)

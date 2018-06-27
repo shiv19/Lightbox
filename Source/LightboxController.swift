@@ -1,22 +1,22 @@
 import UIKit
 import Hue
 
-public protocol LightboxControllerPageDelegate: class {
+@objc public protocol LightboxControllerPageDelegate: class {
 
   func lightboxController(_ controller: LightboxController, didMoveToPage page: Int)
 }
 
-public protocol LightboxControllerDismissalDelegate: class {
+@objc public protocol LightboxControllerDismissalDelegate: class {
 
   func lightboxControllerWillDismiss(_ controller: LightboxController)
 }
 
-public protocol LightboxControllerTouchDelegate: class {
+@objc public protocol LightboxControllerTouchDelegate: class {
 
   func lightboxController(_ controller: LightboxController, didTouch image: LightboxImage, at index: Int)
 }
 
-open class LightboxController: UIViewController {
+@objc open class LightboxController: UIViewController {
 
   // MARK: - Internal views
 
@@ -54,21 +54,21 @@ open class LightboxController: UIViewController {
 
   // MARK: - Public views
 
-  open fileprivate(set) lazy var headerView: HeaderView = { [unowned self] in
+  @objc open fileprivate(set) lazy var headerView: HeaderView = { [unowned self] in
     let view = HeaderView()
     view.delegate = self
 
     return view
   }()
 
-  open fileprivate(set) lazy var footerView: FooterView = { [unowned self] in
+  @objc open fileprivate(set) lazy var footerView: FooterView = { [unowned self] in
     let view = FooterView()
     view.delegate = self
 
     return view
   }()
 
-  open fileprivate(set) lazy var overlayView: UIView = { [unowned self] in
+  @objc open fileprivate(set) lazy var overlayView: UIView = { [unowned self] in
     let view = UIView(frame: CGRect.zero)
     let gradient = CAGradientLayer()
     let colors = [UIColor(hex: "090909").alpha(0), UIColor(hex: "040404")]
@@ -81,7 +81,7 @@ open class LightboxController: UIViewController {
 
   // MARK: - Properties
 
-  open fileprivate(set) var currentPage = 0 {
+  @objc open fileprivate(set) var currentPage = 0 {
     didSet {
       currentPage = min(numberOfPages - 1, max(0, currentPage))
       footerView.updatePage(currentPage + 1, numberOfPages)
@@ -103,11 +103,11 @@ open class LightboxController: UIViewController {
     }
   }
 
-  open var numberOfPages: Int {
+  @objc open var numberOfPages: Int {
     return pageViews.count
   }
 
-  open var dynamicBackground: Bool = false {
+  @objc open var dynamicBackground: Bool = false {
     didSet {
       if dynamicBackground == true {
         effectView.frame = view.frame
@@ -121,13 +121,13 @@ open class LightboxController: UIViewController {
     }
   }
 
-  open var spacing: CGFloat = 20 {
+  @objc open var spacing: CGFloat = 20 {
     didSet {
       configureLayout(view.bounds.size)
     }
   }
 
-  open var images: [LightboxImage] {
+  @objc open var images: [LightboxImage] {
     get {
       return pageViews.map { $0.image }
     }
@@ -137,11 +137,11 @@ open class LightboxController: UIViewController {
     }
   }
 
-  open weak var pageDelegate: LightboxControllerPageDelegate?
-  open weak var dismissalDelegate: LightboxControllerDismissalDelegate?
-  open weak var imageTouchDelegate: LightboxControllerTouchDelegate?
-  open internal(set) var presented = false
-  open fileprivate(set) var seen = false
+  @objc open weak var pageDelegate: LightboxControllerPageDelegate?
+  @objc open weak var dismissalDelegate: LightboxControllerDismissalDelegate?
+  @objc open weak var imageTouchDelegate: LightboxControllerTouchDelegate?
+  @objc open internal(set) var presented = false
+  @objc open fileprivate(set) var seen = false
 
   lazy var transitionManager: LightboxTransition = LightboxTransition()
   var pageViews = [PageView]()
@@ -152,19 +152,19 @@ open class LightboxController: UIViewController {
 
   // MARK: - Initializers
 
-  public init(images: [LightboxImage] = [], startIndex index: Int = 0) {
+  @objc public init(images: [LightboxImage] = [], startIndex index: Int = 0) {
     self.initialImages = images
     self.initialPage = index
     super.init(nibName: nil, bundle: nil)
   }
 
-  public required init?(coder aDecoder: NSCoder) {
+  @objc public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
   // MARK: - View lifecycle
 
-  open override func viewDidLoad() {
+  @objc open override func viewDidLoad() {
     super.viewDidLoad()
 
     statusBarHidden = UIApplication.shared.isStatusBarHidden
@@ -182,7 +182,7 @@ open class LightboxController: UIViewController {
     goTo(initialPage, animated: false)
   }
 
-  open override func viewDidAppear(_ animated: Bool) {
+  @objc open override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     if !presented {
       presented = true
@@ -190,7 +190,7 @@ open class LightboxController: UIViewController {
     }
   }
 
-  open override func viewDidLayoutSubviews() {
+  @objc open override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
 
     scrollView.frame = view.bounds
@@ -212,13 +212,13 @@ open class LightboxController: UIViewController {
     )
   }
 
-  open override var prefersStatusBarHidden: Bool {
+  @objc open override var prefersStatusBarHidden: Bool {
     return LightboxConfig.hideStatusBar
   }
 
   // MARK: - Rotation
 
-  override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+  @objc override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransition(to: size, with: coordinator)
 
     coordinator.animate(alongsideTransition: { _ in
@@ -228,7 +228,7 @@ open class LightboxController: UIViewController {
 
   // MARK: - Configuration
 
-  func configurePages(_ images: [LightboxImage]) {
+  @objc func configurePages(_ images: [LightboxImage]) {
     pageViews.forEach { $0.removeFromSuperview() }
     pageViews = []
     
@@ -245,7 +245,7 @@ open class LightboxController: UIViewController {
     configureLayout(view.bounds.size)
   }
   
-  func reconfigurePagesForPreload() {
+  @objc func reconfigurePagesForPreload() {
     let preloadIndicies = calculatePreloadIndicies()
     
     for i in 0..<initialImages.count {
@@ -264,7 +264,7 @@ open class LightboxController: UIViewController {
 
   // MARK: - Pagination
 
-  open func goTo(_ page: Int, animated: Bool = true) {
+  @objc open func goTo(_ page: Int, animated: Bool = true) {
     guard page >= 0 && page < numberOfPages else {
       return
     }
@@ -279,11 +279,11 @@ open class LightboxController: UIViewController {
     scrollView.setContentOffset(offset, animated: shouldAnimated)
   }
 
-  open func next(_ animated: Bool = true) {
+  @objc open func next(_ animated: Bool = true) {
     goTo(currentPage + 1, animated: animated)
   }
 
-  open func previous(_ animated: Bool = true) {
+  @objc open func previous(_ animated: Bool = true) {
     goTo(currentPage - 1, animated: animated)
   }
 
@@ -295,7 +295,7 @@ open class LightboxController: UIViewController {
 
   // MARK: - Layout
 
-  open func configureLayout(_ size: CGSize) {
+  @objc open func configureLayout(_ size: CGSize) {
     scrollView.frame.size = size
     scrollView.contentSize = CGSize(
       width: size.width * CGFloat(numberOfPages) + spacing * CGFloat(numberOfPages - 1),
@@ -323,7 +323,7 @@ open class LightboxController: UIViewController {
     backgroundView.layer.add(CATransition(), forKey: kCATransitionFade)
   }
 
-  func toggleControls(pageView: PageView?, visible: Bool, duration: TimeInterval = 0.1, delay: TimeInterval = 0) {
+  @objc func toggleControls(pageView: PageView?, visible: Bool, duration: TimeInterval = 0.1, delay: TimeInterval = 0) {
     let alpha: CGFloat = visible ? 1.0 : 0.0
 
     pageView?.playButton.isHidden = !visible
@@ -337,7 +337,7 @@ open class LightboxController: UIViewController {
   
   // MARK: - Helper functions
   
-  func calculatePreloadIndicies () -> [Int] {
+  @objc func calculatePreloadIndicies () -> [Int] {
     var preloadIndicies: [Int] = []
     let preload = LightboxConfig.preload
     if preload > 0 {
@@ -357,7 +357,7 @@ open class LightboxController: UIViewController {
 
 extension LightboxController: UIScrollViewDelegate {
 
-  public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+  @objc public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     var speed: CGFloat = velocity.x < 0 ? -2 : 2
 
     if velocity.x == 0 {
@@ -384,7 +384,7 @@ extension LightboxController: UIScrollViewDelegate {
 
 extension LightboxController: PageViewDelegate {
 
-  func remoteImageDidLoad(_ image: UIImage?, imageView: UIImageView) {
+  @objc func remoteImageDidLoad(_ image: UIImage?, imageView: UIImageView) {
     guard let image = image, dynamicBackground else {
       return
     }
@@ -397,16 +397,16 @@ extension LightboxController: PageViewDelegate {
     loadDynamicBackground(image)
   }
 
-  func pageViewDidZoom(_ pageView: PageView) {
+  @objc func pageViewDidZoom(_ pageView: PageView) {
     let duration = pageView.hasZoomed ? 0.1 : 0.5
     toggleControls(pageView: pageView, visible: !pageView.hasZoomed, duration: duration, delay: 0.5)
   }
 
-  func pageView(_ pageView: PageView, didTouchPlayButton videoURL: URL) {
+  @objc func pageView(_ pageView: PageView, didTouchPlayButton videoURL: URL) {
     LightboxConfig.handleVideo(self, videoURL)
   }
 
-  func pageViewDidTouch(_ pageView: PageView) {
+  @objc func pageViewDidTouch(_ pageView: PageView) {
     guard !pageView.hasZoomed else { return }
 
     imageTouchDelegate?.lightboxController(self, didTouch: images[currentPage], at: currentPage)
@@ -420,7 +420,7 @@ extension LightboxController: PageViewDelegate {
 
 extension LightboxController: HeaderViewDelegate {
 
-  func headerView(_ headerView: HeaderView, didPressDeleteButton deleteButton: UIButton) {
+  @objc func headerView(_ headerView: HeaderView, didPressDeleteButton deleteButton: UIButton) {
     deleteButton.isEnabled = false
 
     guard numberOfPages != 1 else {
@@ -447,7 +447,7 @@ extension LightboxController: HeaderViewDelegate {
     }
   }
 
-  func headerView(_ headerView: HeaderView, didPressCloseButton closeButton: UIButton) {
+  @objc func headerView(_ headerView: HeaderView, didPressCloseButton closeButton: UIButton) {
     closeButton.isEnabled = false
     presented = false
     dismissalDelegate?.lightboxControllerWillDismiss(self)
@@ -459,7 +459,7 @@ extension LightboxController: HeaderViewDelegate {
 
 extension LightboxController: FooterViewDelegate {
 
-  public func footerView(_ footerView: FooterView, didExpand expanded: Bool) {
+  @objc public func footerView(_ footerView: FooterView, didExpand expanded: Bool) {
     UIView.animate(withDuration: 0.25, animations: {
       self.overlayView.alpha = expanded ? 1.0 : 0.0
       self.headerView.deleteButton.alpha = expanded ? 0.0 : 1.0
