@@ -4,12 +4,12 @@ import AVKit
 import AVFoundation
 import Imaginary
 
-@objc public class LightboxConfig {
+public class LightboxConfig {
   /// Whether to show status bar while Lightbox is presented
-  @objc public static var hideStatusBar = true
+  public static var hideStatusBar = true
 
   /// Provide a closure to handle selected video
-  @objc public static var handleVideo: (_ from: UIViewController, _ videoURL: URL) -> Void = { from, videoURL in
+  public static var handleVideo: (_ from: UIViewController, _ videoURL: URL) -> Void = { from, videoURL in
     let videoController = AVPlayerViewController()
     videoController.player = AVPlayer(url: videoURL)
 
@@ -19,7 +19,7 @@ import Imaginary
   }
 
   /// How to load image onto UIImageView
-  @objc public static var loadImage: (UIImageView, URL, ((UIImage?) -> Void)?) -> Void = { (imageView, imageURL, completion) in
+  public static var loadImage: (UIImageView, URL, ((UIImage?) -> Void)?) -> Void = { (imageView, imageURL, completion) in
 
     // Use Imaginary by default
     imageView.setImage(url: imageURL, placeholder: nil, completion: { result in
@@ -33,16 +33,16 @@ import Imaginary
   }
 
   /// Indicator is used to show while image is being fetched
-  @objc public static var makeLoadingIndicator: () -> UIView = {
+  public static var makeLoadingIndicator: () -> UIView = {
     return LoadingIndicator()
   }
   
   /// Number of images to preload.
   ///
   /// 0 - Preload all images (default).
-  @objc public static var preload = 0
+  public static var preload = 0
 
-  @objc public struct PageIndicator {
+  public struct PageIndicator {
     public static var enabled = true
     public static var separatorColor = UIColor(hex: "3D4757")
 
@@ -57,7 +57,7 @@ import Imaginary
     ]
   }
 
-  @objc public struct CloseButton {
+  public struct CloseButton {
     public static var enabled = true
     public static var size: CGSize?
     public static var text = NSLocalizedString("Close", comment: "")
@@ -74,7 +74,7 @@ import Imaginary
     ]
   }
 
-  @objc public struct DeleteButton {
+  public struct DeleteButton {
     public static var enabled = false
     public static var size: CGSize?
     public static var text = NSLocalizedString("Delete", comment: "")
@@ -91,7 +91,7 @@ import Imaginary
     ]
   }
 
-  @objc public struct InfoLabel {
+  public struct InfoLabel {
     public static var enabled = true
     public static var textColor = UIColor.white
     public static var ellipsisText = NSLocalizedString("Show more", comment: "")
@@ -103,7 +103,7 @@ import Imaginary
     ]
   }
 
-  @objc public struct Zoom {
+  public struct Zoom {
     public static var minimumScale: CGFloat = 1.0
     public static var maximumScale: CGFloat = 3.0
   }
